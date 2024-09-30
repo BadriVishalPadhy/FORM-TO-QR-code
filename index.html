@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Ticket Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  </head>
+  <body>
+    <form id="ticketForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required /><br />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required /><br />
+
+      <label for="eventName">Event Name:</label>
+      <input type="text" id="eventName" required /><br />
+
+      <label for="eventDate">Event Date:</label>
+      <input type="date" id="eventDate" required /><br />
+
+      <button type="submit">Generate QR Code</button>
+    </form>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <div id="qrcode"></div>
+
+    <script>
+      // new QRCode(document.getElementById("qrcode"), ticketData);
+      document
+        .getElementById("ticketForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const eventName = document.getElementById("eventName").value;
+          const eventDate = document.getElementById("eventDate").value;
+
+          const ticketData = `Name: ${name}, Email: ${email}, Event: ${eventName}, Date: ${eventDate}`;
+
+          // Clear previous QR code
+          document.getElementById("qrcode").innerHTML = "";
+
+          // Generate new QR code
+          const qrCode = new QRCode(document.getElementById("qrcode"), {
+            text: ticketData,
+            width: 256,
+            height: 256,
+          });
+        });
+    </script>
+  </body>
+</html>
